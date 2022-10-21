@@ -1,5 +1,5 @@
 
-<link rel="stylesheet" href="style2.css">
+<link rel="stylesheet" href="style3.css">
 
 <form action ="receiveprod.php"  method = "post">
     <?php
@@ -8,7 +8,7 @@
         $res  = $conn->query($sql);
     ?>
      <label for="cars">Choose a category:</label>
-
+    
     <select class="combo "name="category">
     <?php
         while($rows = $res->fetch_assoc())

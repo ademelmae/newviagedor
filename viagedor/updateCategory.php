@@ -2,33 +2,43 @@
 
 <?php
     require_once "dbconnect.php";
-    $catID = $_GET['id'];
+    $prodID = $_GET['id'];
 
-    // var_dump($catID);
-    $sqlQuery = "SELECT * from tbl_ademel WHERE id = $catID";
-    
-    $res = $conn->query($sqlQuery);
-
-
+ 
     if($_POST)
     {
-        $Cname = $_POST ['name'];
-        $Cstat = $_POST ['status'] ;
-       $queryUpdate = "UPDATE tbl_ademel SET name= ' $Cname ', status= '$Cstat ' WHERE id = '$catID '";  
+        $prodName = $_POST ['productName'];
+        $price = $_POST ['price'] ;
+        $category = $_POST['category'];
+       $queryUpdate = "UPDATE prod SET productName= ' $prodName ', price= '$price ' , category = '$category' WHERE id = '$prodID '";  
        $res = $conn->query($queryUpdate);
        echo "\nSuccessfully Updated!";
     }
 
-
-      
 ?>
 
 <form action="" method="post">
-
-    <input type="text" placeholder="Enter Category name" name="name" value="">
+    <link rel="stylesheet" href="style3.css">
+    <select class="combo "name="category">
+    <?php
+        require_once "dbconnect.php";
+        $sql = "Select catID, categoryName from cat";
+        $res  = $conn->query($sql);
+    ?>
+    <?php
+        while($rows = $res->fetch_assoc())
+        {
+            $catID = $rows['catID'];
+            $catName = $rows['categoryName'];
+            echo "<option value = $catID>$catName</option>";
+        }
+        
+    ?>
+    </select>
+    <input type="text" placeholder="Enter product name" name="productName" value="">
     <br>
-    <input type="text"  name="status" placeholder="Enter category status" value="">
+    <input type="text"  placeholder="Enter price" name="price" value="">
     <br>
-   
-    <input type="submit">
+    
+    <input type="submit" value = "Update">
 </form>
